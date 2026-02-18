@@ -174,7 +174,7 @@ function ScheduleSection(props) {
   var monthKey = makeMonthKey(yr, mo);
 
   useEffect(function() {
-    if (!allMonths[monthKey]) { setAllMonths(function(prev) { var n = Object.assign({}, prev); n[monthKey] = generateMonthFromBase(baseSchedules, faculty, false); return n; }); }
+    if (!allMonths[monthKey]) { setAllMonths(function(prev) { var n = Object.assign({}, prev); n[monthKey] = generateMonthFromBase(baseSchedules, faculty, true, monthKey); return n; }); }
   }, [monthKey]);
 
   var activeSched = allMonths[monthKey] || {};

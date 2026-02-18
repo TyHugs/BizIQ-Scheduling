@@ -1,55 +1,63 @@
 # BizIQ Scheduling
 
 **Faculty Effort & Activity Intelligence**
-University of Michigan · Department of Urology
+Department of Urology · University of Michigan Health
 
-Part of the **BizIQ** analytics platform. A lightweight web application for tracking faculty scheduling, time away, and effort allocation against expected targets.
+A lightweight web app for tracking faculty effort allocation, time away, and schedule overrides — built as an internal replacement for QGenda's scheduling input workflow.
 
-## Quick Start
+## Live Data
 
-1. Download all files
-2. Open `index.html` in a browser — that's it, no server needed
+This deployment is powered by real QGenda data:
 
-**Access codes:**
-- `admin` → Admin Portal (schedule management)
-- `lead` → Leadership Dashboard (analytics)
-
-## Deploy to GitHub Pages
-
-1. Create a new GitHub repo
-2. Push all files to `main` (ensure `index.html` is at the root)
-3. Settings → Pages → Deploy from branch → `main` / root
-4. Live at `https://yourusername.github.io/repo-name/`
+- **73 providers** from the department roster
+- **67 base schedule templates** from QGenda Work Patterns
+- **25 months** of active schedule data (July 2024 – July 2026)
+- **~11,500 override cells** detected (where actual schedule differs from base)
 
 ## Architecture
 
-Zero dependencies, zero build tools. React + Babel loaded via CDN.
+No build tools. No dependencies. Just static HTML/CSS/JS hosted on GitHub Pages.
 
 ```
-index.html    → Entry point
-styles.css    → Admin (light) + Leadership (dark) themes
-data.js       → Constants, seed faculty, activity types
-utils.js      → Metric calculations, schedule generators
-app.jsx       → All React components (single file)
+index.html       → Entry point, loads CDN scripts
+styles.css       → Admin (light) + Dashboard (dark) themes
+data.js          → QGenda-sourced faculty, base schedules, monthly overrides
+utils.js         → Metrics, schedule generation, state initialization
+app.jsx          → All React components (Babel in-browser)
 ```
 
-### Key Concepts
+## Two Views
 
-**Base Schedule** — Persistent template per faculty (Week 1–5 × Mon–Fri). What their month *should* look like. Changes only when a permanent schedule shift occurs.
+**Schedule Management** (light theme) — For administrative staff
+- Faculty sidebar with search and override count badges
+- Week × Day schedule grid with click-to-edit cells
+- Multi-month navigation with base template toggle
+- Multi-Select bulk editing
+- Override indicators showing changes from base
 
-**Active Schedule** — Month-specific instances inheriting from base. Admins layer overrides: time away, coverage swaps, location changes. Each month is stored independently.
+**Dashboard** (dark theme) — For leadership
+- KPI tiles: faculty count, variance, utilization, time away, overrides
+- Sortable/filterable faculty roster
+- Click-to-expand detail panel with effort bars and mini heatmap
 
-**Roles** — Admin Portal is a clean, warm workspace for administrative assistants. Leadership Dashboard is a dark analytical interface for department leadership.
+## Deploy
 
-## Features
+1. Push all files to a GitHub repository
+2. Settings → Pages → Source: main branch, root
+3. Site goes live at `https://[username].github.io/[repo]/`
 
-- Multi-month navigation (past, present, future)
-- Click-to-edit cells with inline dropdowns
-- Multi-Select bulk editing (log a week of vacation in seconds)
-- Override tracking with visual indicators
-- Expected vs actual effort variance
-- Division-level filtering and sorting
+## Local Development
+
+Open `index.html` in a browser. No server needed.
+
+## Data Updates
+
+To refresh with new QGenda exports:
+1. Export schedule data and work patterns from QGenda as Excel
+2. Run the parser script to regenerate `data.js`
+3. Push to GitHub
 
 ---
 
-*Part of the BizIQ platform · Michigan Medicine*
+*Built by Tyler — Lead Business Consultant, Department of Urology*
+*Part of the BizIQ analytics platform*
